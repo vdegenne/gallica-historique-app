@@ -38,3 +38,6 @@ L'interface est consultable a l'addresse suivante: <a href="http://localhost:445
 Vous devez charger l'extension dans Chrome. La racine de l'extension est `./chrome-extension/` (et non la racine du repo lui-meme.)
 
 ## Screenshot
+
+<img width="640" alt="image" src="https://github.com/user-attachments/assets/2049efdf-e07c-47d8-b033-5e2c9ee611e7" />
+
