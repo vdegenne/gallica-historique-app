@@ -64,9 +64,7 @@ window.addEventListener('keypress', async (event: KeyboardEvent) => {
 window.addEventListener('voice-recorder-submit', async (event: Event) => {
 	const {input, mode} = (event as CustomEvent).detail
 	if (input && mode === 0) {
-		// const {store} = await import('./store.js')
-		// store.search = input
+		const {store} = await import('./store.js')
+		store.search = input
 	}
 })
-
-export {}

@@ -6,7 +6,7 @@
 import {MdIconButton} from '@material/web/iconbutton/icon-button.js'
 import {MdListItem} from '@material/web/list/list-item.js'
 import {withController} from '@snar/lit'
-import {css, html} from 'lit'
+import {css, html, PropertyValues} from 'lit'
 import {withStyles} from 'lit-with-styles'
 import {customElement, query, queryAll, state} from 'lit/decorators.js'
 import {repeat} from 'lit/directives/repeat.js'
@@ -168,8 +168,11 @@ export class PageMain extends PageElement {
 						}
 						return html`<!-- -->
 							<md-list-item
-								@click="${() => this.#visitLink(entry)}"
-								type="button"
+								@click="${() => {
+									api.get(`/touch/${entry.id}` as '/touch/:id')
+								}}"
+								href="${`${entry.url}${entry.page ? `/f${entry.page}` : ''}`}"
+								_target="_blank"
 								?selected="${entry.id === store.selectedIndexId}"
 								data-id="${entry.id}"
 								?completed="${progress === 1}"
@@ -285,11 +288,11 @@ export class PageMain extends PageElement {
 				${this.#renderImportButton()}
 			</div>
 
-			<div class="text-right p-2">
-				<md-icon-button @click=${openSettingsDialog}>
-					<md-icon>settings</md-icon>
-				</md-icon-button>
-			</div>
+			<!-- <div class="text-right p-2"> -->
+			<!-- 	<md-icon-button @click=${openSettingsDialog}> -->
+			<!-- 		<md-icon>settings</md-icon> -->
+			<!-- 	</md-icon-button> -->
+			<!-- </div> -->
 			<!-- -->`
 	}
 
@@ -325,13 +328,13 @@ export class PageMain extends PageElement {
 
 	#visitLink(entry: gallica.HistoryEntry) {
 		const fullUrl = `${entry.url}${entry.page ? `/f${entry.page}` : ''}`
-		entry.visitedCount ??= 0
-		entry.visitedCount++
+		// entry.visitedCount ??= 0
+		// entry.visitedCount++
+		// this.history = [...this.history] // force update to save data
 		api.get(`/touch/${entry.id}` as '/touch/:id')
-		this.history = [...this.history] // force update to save data
 		// visit link
 		// window.location.href = fullUrl;
-		// window.open(fullUrl, '_blank')
+		window.open(fullUrl, '_blank')
 	}
 
 	async deleteEntry(entry: gallica.HistoryEntry) {
@@ -388,4 +391,4 @@ export class PageMain extends PageElement {
 	}
 }
 
-// export const pageMain = new PageMain();
+// export const mainPage = new PageMain()

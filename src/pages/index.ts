@@ -7,6 +7,6 @@ export type Page = (typeof availablePages)[number]
 export function getPage(name: Page) {
 	return cquerySelector(`page-${name}`)
 }
-export function getMainPage() {
-	return getPage('main') as PageMain
-}
+// export function getMainPage() {
+// 	return getPage('main') as PageMain
+// }

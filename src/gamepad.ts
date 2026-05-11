@@ -1,6 +1,20 @@
 import {ReactiveController} from '@snar/lit'
 import {MGamepad, MiniGamepad, Mode} from '@vdegenne/mini-gamepad'
+import {Repeater} from '@vdegenne/mini-gamepad/repeater.js'
 import {state} from 'lit/decorators.js'
+import {app} from './app-shell/app-shell.js'
+import {store} from './store.js'
+
+const upRepeater = new Repeater({
+	action() {
+		app.mainPage.selectPreviousIndex()
+	},
+})
+const downRepeater = new Repeater({
+	action() {
+		app.mainPage.selectNextIndex()
+	},
+})
 
 class GamepadController extends ReactiveController {
 	@state() gamepad: MGamepad | undefined
@@ -56,9 +70,40 @@ class GamepadController extends ReactiveController {
 				MIDDLE_TOP: guide,
 			} = map
 
+			gamepad
+				.for(lup)
+				.before(({mode}) => {
+					if (mode === Mode.NORMAL) {
+						upRepeater.start()
+					}
+				})
+				.after(() => upRepeater.stop())
+
+			gamepad
+				.for(ldown)
+				.before(({mode}) => {
+					if (mode === Mode.NORMAL) {
+						downRepeater.start()
+					}
+				})
+				.after(() => downRepeater.stop())
+
+			gamepad.for(r1).before(({mode}) => {
+				switch (mode) {
+					case Mode.NORMAL:
+						store.jumpToNextSortingMethod()
+						break
+				}
+			})
+
 			gamepad.for(b).before(({mode}) => {
-				if (mode === Mode.NORMAL) {
-					// logic
+				switch (mode) {
+					case Mode.NORMAL:
+						const selected = app.mainPage.selectedItem
+						if (selected) {
+							selected.click()
+						}
+						break
 				}
 			})
 		})

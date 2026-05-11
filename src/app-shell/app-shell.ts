@@ -2,14 +2,13 @@ import '@material/mwc-top-app-bar'
 import {withController} from '@snar/lit'
 import {html, type PropertyValues} from 'lit'
 import {withStyles} from 'lit-with-styles'
-import {customElement} from 'lit/decorators.js'
-import {unsafeSVG} from 'lit/directives/unsafe-svg.js'
+import {customElement, query} from 'lit/decorators.js'
 import {MaterialShellChild} from 'material-shell/MaterialShellChild'
-import {SVG_LOGO} from '../assets/assets.js'
 import {availablePages} from '../constants.js'
 import {openSettingsDialog} from '../imports.js'
 import {store} from '../store.js'
 import styles from './app-shell.css?inline'
+import {PageMain} from '../pages/page-main.js'
 
 declare global {
 	interface Window {
@@ -24,6 +23,8 @@ declare global {
 @withStyles(styles)
 @withController(store)
 export class AppShell extends MaterialShellChild {
+	@query('page-main') mainPage!: PageMain
+
 	render() {
 		return html`<!-- -->
 			<!-- <mwc-top-app-bar -->
