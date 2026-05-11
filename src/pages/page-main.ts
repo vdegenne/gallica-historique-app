@@ -365,6 +365,7 @@ export class PageMain extends PageElement {
 					<div>Are you sure to delete this element?</div>
 					<p><b>${entry.bookInfo?.title}</b></p>
 					<!-- -->`,
+				'Delete',
 			)
 			// const index = this.history.indexOf(entry)
 			// if (store.selectedIndexId === entry.id) {

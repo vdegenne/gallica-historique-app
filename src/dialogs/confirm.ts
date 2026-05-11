@@ -1,7 +1,10 @@
-import {html, type TemplateResult} from 'lit';
-import {Dialog} from './dialogs.js';
+import {html, type TemplateResult} from 'lit'
+import {Dialog} from './dialogs.js'
 
-export function confirmDialog(message: string | TemplateResult) {
+export function confirmDialog(
+	message: string | TemplateResult,
+	confirmLabel = 'Ok',
+) {
 	return new Promise<void>((resolve, reject) => {
 		new Dialog(
 			'Are you sure',
@@ -16,21 +19,22 @@ export function confirmDialog(message: string | TemplateResult) {
 					return html`<!-- -->
 						<md-text-button
 							@click=${() => {
-								reject();
-								dialog.close();
+								reject()
+								dialog.close()
 							}}
 							>Cancel</md-text-button
 						>
 						<md-filled-button
 							@click=${() => {
-								resolve();
-								dialog.close();
+								resolve()
+								dialog.close()
 							}}
-							>Ok</md-filled-button
+							autofocus
+							>${confirmLabel}</md-filled-button
 						>
-						<!-- -->`;
+						<!-- -->`
 				},
 			},
-		);
-	});
+		)
+	})
 }
