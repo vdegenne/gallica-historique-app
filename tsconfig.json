@@ -1,0 +1,20 @@
+{
+	"compilerOptions": {
+		"target": "esnext",
+		"module": "nodenext",
+		"moduleResolution": "nodenext",
+		"strict": true,
+		"useDefineForClassFields": false,
+		"experimentalDecorators": true,
+		"resolveJsonModule": true,
+		"noUncheckedIndexedAccess": true,
+		"types": [
+			"vite/client",
+			"lit",
+			"lit/decorators.js",
+			"material-shell",
+			"chrome"
+		]
+	},
+	"include": ["./src/**/*.ts", "./types.d.ts"]
+}
