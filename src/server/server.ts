@@ -12,13 +12,6 @@ config<API>({
 
 	get: {
 		'/ping': () => 'pong',
-		'/touch/:id'({params}) {
-			const entry = data.getItemFromId(Number(params.id))
-			if (entry) {
-				entry.visitedCount++
-				data.save()
-			}
-		},
 	},
 
 	post: {
@@ -63,6 +56,24 @@ config<API>({
 
 			data.save()
 
+			return ''
+		},
+
+		'/entries/touch/:id'({params}) {
+			const entry = data.getItemFromId(Number(params.id))
+			if (entry) {
+				entry.visitedCount++
+				data.save()
+			}
+		},
+	},
+
+	delete: {
+		'/entries/:id'({params}) {
+			const id = Number(params.id)
+			if (!isNaN(id) && data.itemExistsFromId(id)) {
+				data.deleteItem(id)
+			}
 			return ''
 		},
 	},

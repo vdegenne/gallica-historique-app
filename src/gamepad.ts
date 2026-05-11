@@ -27,6 +27,7 @@ class GamepadController extends ReactiveController {
 		})
 		minigp.onConnect((gamepad) => {
 			// document.body.requestPointerLock()
+			app.mainPage.gamepad = true
 			let voiceRecorderOpen = false
 			window.addEventListener('voice-recorder-open', () => {
 				voiceRecorderOpen = true
@@ -103,6 +104,14 @@ class GamepadController extends ReactiveController {
 						if (selected) {
 							selected.click()
 						}
+						break
+				}
+			})
+
+			gamepad.for(y).before(({mode}) => {
+				switch (mode) {
+					case Mode.PRIMARY:
+						app.mainPage.deleteEntry()
 						break
 				}
 			})

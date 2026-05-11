@@ -104,7 +104,7 @@
 		"@vdegenne/lit-debug": "^0.1.2",
 		"@vdegenne/material-color-helpers": "^1.11.7",
 		"@vdegenne/mini-gamepad": "^0.4.16",
-		"@vdegenne/mini-rest": "^0.3.2",
+		"@vdegenne/mini-rest": "^0.3.4",
 		"@vdegenne/rollup": "^0.1.15",
 		"@vdegenne/rollup-plugin-minify-html": "^1.0.6",
 		"@vdegenne/router": "^0.1.8",

@@ -8,7 +8,13 @@ import {MdListItem} from '@material/web/list/list-item.js'
 import {withController} from '@snar/lit'
 import {css, html, PropertyValues} from 'lit'
 import {withStyles} from 'lit-with-styles'
-import {customElement, query, queryAll, state} from 'lit/decorators.js'
+import {
+	customElement,
+	property,
+	query,
+	queryAll,
+	state,
+} from 'lit/decorators.js'
 import {repeat} from 'lit/directives/repeat.js'
 import {unsafeHTML} from 'lit/directives/unsafe-html.js'
 import toast from 'toastit'
@@ -39,6 +45,10 @@ declare global {
 @withStyles(css`
 	:host {
 	}
+	:host([gamepad]) md-list-item {
+		--md-ripple-hover-color: transparent;
+	}
+
 	md-list-item[selected] {
 		background-color: var(--md-sys-color-surface-container-highest);
 	}
@@ -66,6 +76,7 @@ declare global {
 `)
 export class PageMain extends PageElement {
 	@state() history = history
+	@property({type: Boolean, reflect: true}) gamepad = false
 
 	@queryAll('md-list-item') itemElements!: MdListItem[]
 	@query('md-list-item[selected]') selectedItem?: MdListItem
@@ -168,9 +179,10 @@ export class PageMain extends PageElement {
 						}
 						return html`<!-- -->
 							<md-list-item
-								@click="${() => {
-									api.get(`/touch/${entry.id}` as '/touch/:id')
-								}}"
+								@click="${() =>
+									api.post(
+										`/entries/touch/${entry.id}` as '/entries/touch/:id',
+									)}"
 								href="${`${entry.url}${entry.page ? `/f${entry.page}` : ''}`}"
 								_target="_blank"
 								?selected="${entry.id === store.selectedIndexId}"
@@ -250,6 +262,7 @@ export class PageMain extends PageElement {
 									: null}
 								<div slot="end" class="flex items-end gap-1">
 									<md-icon-button
+										class="delete-button"
 										@click="${(e: Event) => {
 											e.preventDefault()
 											e.stopPropagation()
@@ -331,32 +344,42 @@ export class PageMain extends PageElement {
 		// entry.visitedCount ??= 0
 		// entry.visitedCount++
 		// this.history = [...this.history] // force update to save data
-		api.get(`/touch/${entry.id}` as '/touch/:id')
+		api.post(`/entries/touch/${entry.id}` as '/entries/touch/:id')
 		// visit link
 		// window.location.href = fullUrl;
 		window.open(fullUrl, '_blank')
 	}
 
-	async deleteEntry(entry: gallica.HistoryEntry) {
+	async deleteEntry(entry?: gallica.HistoryEntry) {
+		if (!entry) {
+			const delBtn =
+				this.selectedItem?.querySelector<HTMLElement>('.delete-button')
+			if (delBtn) {
+				delBtn.click()
+			}
+			return
+		}
 		try {
 			await confirmDialog(
 				html`<!-- -->
-					<div>Vous êtes sur le point de supprimer cette entrée:</div>
+					<div>Are you sure to delete this element?</div>
 					<p><b>${entry.bookInfo?.title}</b></p>
-					<div>Procéder à la suppression ?</div>
 					<!-- -->`,
 			)
-			const index = this.history.indexOf(entry)
-			if (store.selectedIndexId === entry.id) {
-				// Trying to select the next or previous item on the UI before deletion
-				// if the current select item is the one we want to delete.
-				if (!this.selectNextIndex()) {
-					this.selectPreviousIndex()
-				}
-			}
-			this.history.splice(index >>> 0, 1)
-			this.history = [...this.history]
+			// const index = this.history.indexOf(entry)
+			// if (store.selectedIndexId === entry.id) {
+			// 	// Trying to select the next or previous item on the UI before deletion
+			// 	// if the current select item is the one we want to delete.
+			// 	if (!this.selectNextIndex()) {
+			// 		this.selectPreviousIndex()
+			// 	}
+			// }
+			// this.history.splice(index >>> 0, 1)
+			// this.history = [...this.history]
+			toast('Please wait')
+			api.delete(`/entries/${entry.id}` as '/entries/:id')
 		} catch {
+			toast('canceled')
 			// cancel
 		}
 	}
