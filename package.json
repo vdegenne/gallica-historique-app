@@ -14,9 +14,16 @@
 		"build": "wireit",
 		"build:server": "wireit",
 		"build:chrome-extension": "wireit",
-		"serve:server": "wireit"
+		"serve:server": "wireit",
+		"start": "wireit"
 	},
 	"wireit": {
+		"start": {
+			"#comment": "Juste un alias de dev",
+			"dependencies": [
+				"dev"
+			]
+		},
 		"dev": {
 			"dependencies": [
 				"build:chrome-extension",
@@ -100,7 +107,7 @@
 		"@vdegenne/ago": "^0.1.7",
 		"@vdegenne/debouncer": "^1.0.11",
 		"@vdegenne/forms": "^0.1.72",
-		"@vdegenne/koa": "^0.1.45",
+		"@vdegenne/koa": "^0.1.47",
 		"@vdegenne/lit-debug": "^0.1.2",
 		"@vdegenne/material-color-helpers": "^1.11.7",
 		"@vdegenne/mini-gamepad": "^0.4.16",

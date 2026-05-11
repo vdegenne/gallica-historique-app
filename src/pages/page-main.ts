@@ -179,10 +179,12 @@ export class PageMain extends PageElement {
 						}
 						return html`<!-- -->
 							<md-list-item
-								@click="${() =>
-									api.post(
+								@click="${(event: PointerEvent) => {
+									event.preventDefault()
+									return api.post(
 										`/entries/touch/${entry.id}` as '/entries/touch/:id',
-									)}"
+									)
+								}}"
 								href="${`${entry.url}${entry.page ? `/f${entry.page}` : ''}`}"
 								_target="_blank"
 								?selected="${entry.id === store.selectedIndexId}"

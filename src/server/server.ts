@@ -65,6 +65,7 @@ config<API>({
 				entry.visitedCount++
 				data.save()
 			}
+			return ''
 		},
 	},
 
