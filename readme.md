@@ -1,4 +1,1 @@
-No readme.  
-That doesn't mean it's not an interesting project.
-It will eventually come if needed.  
-Cheers.
+<img src="/design/banner.png">
