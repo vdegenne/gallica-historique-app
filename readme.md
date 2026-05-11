@@ -28,9 +28,13 @@ Vous devez absolument lancer le serveur pour commencer a collecter les informati
 npm run start --watch
 ```
 
-Cette commande a aussi pour effet de demarrer l'interface de consultation en arriere plan.  
-L'interface est consultable a l'addresse suivante: <a href="http://localhost:44539/" target="_blank"></a>
+Cette commande a aussi pour effet de construire et demarrer l'interface de consultation en arriere plan.  
+L'interface est consultable a l'addresse suivante: <a href="http://localhost:44539/" target="_blank">http://localhost:44539/</a>
 
 (tip: Chaque fois que votre PC redemarre, vous devez relancer la meme commande, mais vous pouvez utiliser un service comme pm2, par exemple `pm2 start "npm run start --watch" --name "gallica-historique"` puis `pm2 save` pour sauvegarder les processus. Au boot lancez `pm2 resurrect` pour recuperer vos processus, bien sur `pm2 resurrect` doit etre placer dans un fichier de config de demarrage.)
+
+## Extension Chrome
+
+Vous devez charger l'extension dans Chrome. La racine de l'extension est `./chrome-extension/` (et non la racine du repo lui-meme.)
 
 ## Screenshot
