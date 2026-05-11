@@ -23,6 +23,8 @@ import {PageElement} from './PageElement.js'
 import '@material/web/chips/input-chip.js'
 import '@material/web/menu/menu.js'
 import '@material/web/menu/menu-item.js'
+import '../time-element.js'
+import {api} from '../api.js'
 
 const history: gallica.HistoryEntry[] = _history
 
@@ -120,11 +122,27 @@ export class PageMain extends PageElement {
 						(e1.bookInfo.publicationDate ?? e1.bookInfo.editionDate ?? 0),
 				)
 				break
+			case 'progress':
+				history.sort(
+					(e1, e2) =>
+						(e2.forthPage ?? 0) / (e2.bookInfo.pagesCount ?? 9999) -
+						(e1.forthPage ?? 0) / (e1.bookInfo.pagesCount ?? 9999),
+				)
+				break
 		}
 
 		return html`<!-- -->
-			<div class="flex justify-between items-center gap-3 p-4">
-				<div></div>
+			<div
+				class="flex justify-between items-center gap-3 p-4 bg-(--md-sys-color-surface-container)"
+			>
+				${store.F.TEXTFIELD('Search', 'search', {
+					variant: 'outlined',
+					resetButton: true,
+					autofocus: true,
+					leadingIcon: html`<md-icon>
+						<img src="/logo.svg" />
+					</md-icon>`,
+				})}
 				${store.F.CHIPSELECT('Sort by', 'sortMethod', sortMethods as any)}
 			</div>
 			<md-list>
@@ -309,10 +327,11 @@ export class PageMain extends PageElement {
 		const fullUrl = `${entry.url}${entry.page ? `/f${entry.page}` : ''}`
 		entry.visitedCount ??= 0
 		entry.visitedCount++
+		api.get(`/touch/${entry.id}` as '/touch/:id')
 		this.history = [...this.history] // force update to save data
 		// visit link
 		// window.location.href = fullUrl;
-		window.open(fullUrl, '_blank')
+		// window.open(fullUrl, '_blank')
 	}
 
 	async deleteEntry(entry: gallica.HistoryEntry) {

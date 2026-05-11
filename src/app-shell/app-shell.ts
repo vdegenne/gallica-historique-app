@@ -26,35 +26,27 @@ declare global {
 export class AppShell extends MaterialShellChild {
 	render() {
 		return html`<!-- -->
-			<mwc-top-app-bar
-				?dense=${false}
-				style="--mdc-theme-primary:var(--md-sys-color-surface-container, transparent);--mdc-theme-on-primary:var(--md-sys-color-on-surface)"
-			>
-				<md-list-item
-					slot="title"
-					class="--ml-[-20px] ml-2"
-					slot="navigationIcon"
-				>
-					${store.F.TEXTFIELD('Search', 'search', {
-						resetButton: true,
-						autofocus: true,
-						leadingIcon: html`<md-icon>
-							<!-- 	<img src="${'/assets/img/logo.svg'}" -->
-							<!-- /> -->
-						</md-icon>`,
-					})}
-				</md-list-item>
-
-				<div slot="actionItems" class="flex gap-3">
-					<md-icon-button @click=${openSettingsDialog}>
-						<md-icon>settings</md-icon>
-					</md-icon-button>
-				</div>
-				<div>
-					<page-main ?active=${store.page === 'main'}></page-main>
-					<page-404 ?active=${!availablePages.includes(store.page)}></page-404>
-				</div>
-			</mwc-top-app-bar>
+			<!-- <mwc-top-app-bar -->
+			<!-- 	?dense=${false} -->
+			<!-- 	style="--mdc-theme-primary:var(--md-sys-color-surface-container, transparent);--mdc-theme-on-primary:var(--md-sys-color-on-surface)" -->
+			<!-- > -->
+			<!-- 	<md-list-item -->
+			<!-- 		slot="title" -->
+			<!-- 		class="--ml-[-20px] ml-2" -->
+			<!-- 		slot="navigationIcon" -->
+			<!-- 	> -->
+			<!-- 	</md-list-item> -->
+			<!---->
+			<!-- 	<div slot="actionItems" class="flex gap-3"> -->
+			<!-- 		<md-icon-button @click=${openSettingsDialog}> -->
+			<!-- 			<md-icon>settings</md-icon> -->
+			<!-- 		</md-icon-button> -->
+			<!-- 	</div> -->
+			<!-- 	<div> -->
+			<page-main ?active=${store.page === 'main'}></page-main>
+			<page-404 ?active=${!availablePages.includes(store.page)}></page-404>
+			<!-- 	</div> -->
+			<!-- </mwc-top-app-bar> -->
 			<!-- -->`
 	}
 

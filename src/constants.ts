@@ -11,6 +11,7 @@ export const sortMethods = [
 	'visitedCount',
 	'activityCount',
 	'publicationDate',
+	'progress',
 ] as const
 
 export type SortMethod = (typeof sortMethods)[number]

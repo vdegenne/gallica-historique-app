@@ -12,6 +12,13 @@ config<API>({
 
 	get: {
 		'/ping': () => 'pong',
+		'/touch/:id'({params}) {
+			const entry = data.getItemFromId(Number(params.id))
+			if (entry) {
+				entry.visitedCount++
+				data.save()
+			}
+		},
 	},
 
 	post: {

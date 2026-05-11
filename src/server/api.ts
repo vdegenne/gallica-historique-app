@@ -3,6 +3,7 @@ import {Rest, type Endpoint} from '@vdegenne/mini-rest'
 export interface API {
 	get: {
 		'/ping': Endpoint<void, 'pong'>
+		'/touch/:id': Endpoint<void, any>
 	}
 	post: {
 		'/update': Endpoint<
