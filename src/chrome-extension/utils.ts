@@ -58,6 +58,25 @@ export function parseGallicaUrl(
 	}
 }
 
+function getPagseCounts1() {
+	const span = document.querySelector('.textNbPageEtTailleDoc2')
+	if (span) {
+		return parseInt(span.textContent)
+	}
+}
+function getPagesCount2() {
+	const allSpans = document.querySelectorAll<HTMLSpanElement>('.aboutList span')
+	const pagesCountContainer = [...allSpans].find((span) => {
+		return span.textContent.includes('Nombre total de vues')
+	})
+	if (pagesCountContainer) {
+		const match = pagesCountContainer.textContent.match(/\d+/)
+		if (match) {
+			return parseInt(match[0], 10)
+		}
+	}
+}
+
 export function getBookInformation(): gallica.BookInfo {
 	const info: Partial<gallica.BookInfo> = {}
 	const titleEl = document.querySelector<HTMLSpanElement>('.title')
@@ -91,15 +110,9 @@ export function getBookInformation(): gallica.BookInfo {
 		}
 	}
 	// Pages count
-	const allSpans = document.querySelectorAll<HTMLSpanElement>('.aboutList span')
-	const pagesCountContainer = [...allSpans].find((span) => {
-		return span.textContent.includes('Nombre total de vues')
-	})
-	if (pagesCountContainer) {
-		const match = pagesCountContainer.textContent.match(/\d+/)
-		if (match) {
-			info.pagesCount = parseInt(match[0], 10)
-		}
+	let pagesCount = getPagseCounts1() ?? getPagesCount2()
+	if (pagesCount) {
+		info.pagesCount = pagesCount
 	}
 
 	return info as gallica.BookInfo

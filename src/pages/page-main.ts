@@ -180,7 +180,7 @@ export class PageMain extends PageElement {
 						return html`<!-- -->
 							<md-list-item
 								@click="${(event: PointerEvent) => {
-									event.preventDefault()
+									// event.preventDefault()
 									return api.post(
 										`/entries/touch/${entry.id}` as '/entries/touch/:id',
 									)
